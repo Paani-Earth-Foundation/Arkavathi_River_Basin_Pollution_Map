@@ -208,6 +208,23 @@ body {
     display: none;
 }
 
+#info-box {
+    position: absolute;
+    padding: 4px 6px; /* Small padding to reduce extra space */
+    background-color: white;
+    border: 1px solid #888; /* Thinner border */
+    border-radius: 3px; /* Smaller border radius for a compact look */
+    z-index: 1;
+    display: none; /* Hide Initially */
+    width: auto; /* Auto width to fit content */
+    max-width: 180px; /* Set a reasonable max-width for content wrapping */
+    font-size: 14px; /* Smaller font size */
+    line-height: 1.2; /* Compact line height */
+    word-wrap: break-word; /* Wrap long text if needed */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+}
+
+
 
 /*The css styling code for the satellite and street selection menu layer*/
 #menu_layers {
@@ -310,6 +327,7 @@ body {
 
 <script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.21/web.js"></script>
 <div id="map1"></div>
+<div id="info-box">Hover over a point to see details</div>
 <div id="coordinates"></div>
 <nav id="menu"></nav>
 <div class="sharethis-sticky-share-buttons"></div>
@@ -394,6 +412,8 @@ body {
 </div>
 
 <script>
+var infoBox = document.getElementById('info-box');
+
 const searchJS = document.getElementById('search-js');
     searchJS.onload = function () {
         const searchBox = new MapboxSearchBox();
@@ -437,8 +457,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const colorMap = {
         'Movado_DataPoints': '#de2d26',
         'Govt_Monitoring_Points': '#fc9272'  
+
     };
-   
 
     const buttons = document.querySelectorAll('.toggle-btn');
 
@@ -710,20 +730,7 @@ document.getElementById('reportBtn').onclick = () => {
     window.open('https://paani.earth/interactive-map/', '_blank');
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    var infoBox = document.createElement('div');
-    infoBox.id = 'info-box';
-    infoBox.style.position = 'absolute';
-    infoBox.style.bottom = '20px';
-    infoBox.style.left = '20px';
-    infoBox.style.padding = '10px';
-    infoBox.style.backgroundColor = 'white';
-    infoBox.style.border = '2px solid #888';
-    infoBox.style.borderRadius = '5px';
-    infoBox.style.zIndex = '1';
-    infoBox.innerHTML = 'Hover over a point to see details';
-    document.body.appendChild(infoBox);
-});
+
 
 
 
@@ -732,13 +739,22 @@ document.addEventListener("DOMContentLoaded", () => {
 // Change cursor to pointer on hover
 map.on('mouseenter', 'Movado_DataPoints', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
-    // Display attributes in the info box on hover
+
+    // Populate infobox content
     infoBox.innerHTML = ` 
-        <strong>Paani Study Locations</strong><br>
-        Site Code: ${e.features[0].properties.Monitoring_Site_Code}<br>
-        Monitoring Location: ${e.features[0].properties['Monitoring Location']}<br>
-        Monitoring Purpose: ${e.features[0].properties['Monitoring Purpose']}
+        <strong>Paani Study Locations</strong><br><br>
+        Site Code: <span style="color: #007acc;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
+        Monitoring Location: <span style="color: #007acc;">${e.features[0].properties['Monitoring Location']}</span><br><br>
+        Monitoring Purpose: <span style="color: #007acc;">${e.features[0].properties['Monitoring Purpose']}</span><br>
     `;
+    // Get the mouse position relative to the map container
+    const x = e.point.x + 10; // Add some offset for better positioning
+    const y = e.point.y + 10;
+
+        // Position the infoBox near the cursor
+        infoBox.style.left = `${x}px`;
+        infoBox.style.top = `${y}px`;
+        infoBox.style.display = 'block'; // Show the infoBox
 });
 // Change cursor back to default when not hovering
 map.on('mouseleave', 'Movado_DataPoints', (e) => {
