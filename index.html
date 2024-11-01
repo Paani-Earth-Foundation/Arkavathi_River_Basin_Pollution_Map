@@ -733,8 +733,8 @@ map.on('mouseenter', 'Movado_DataPoints', (e) => {
     infoBox.innerHTML = ` 
         <strong>Paani Study Locations</strong><br>
         Site Code: ${e.features[0].properties.Monitoring_Site_Code}<br>
-        Monitoring Location: ${e.features[0].properties.Monitoring Location}
-        Monitoring Purpose : ${e.features[0].properties.Monitoring Purpose}
+        Monitoring Location: ${e.features[0].properties.'Monitoring Location'}
+        Monitoring Purpose : ${e.features[0].properties.'Monitoring Purpose'}
     `;
 });
 // Change cursor back to default when not hovering
