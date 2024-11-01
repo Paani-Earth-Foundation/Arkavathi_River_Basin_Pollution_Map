@@ -622,13 +622,13 @@ map.addSource('Arkavathi_Industrial_Areas', {
 
     map.addSource('Movado_DataPoints', {
         type: 'vector',
-        url: 'mapbox://prasadmadhuri.cm2kc64kq1zst1nt1kg33fjvj-51e4i'
-    });
+        url: 'mapbox://prasadmadhuri.2qgna7sw'
+    }); 
     map.addLayer({
         id: 'Movado_DataPoints',
         type: 'circle',
         source: 'Movado_DataPoints',
-        'source-layer': 'Paani_Study_Locations',
+        'source-layer': 'Paani_Study_Locations-566v0m',
         paint: {
             'circle-color': '#de2d26',
             'circle-radius': 10
@@ -723,12 +723,14 @@ map.on('mouseleave', 'Movado_DataPoints', () => {
 
 // Click event to show the PDF popup
 map.on('click', 'Movado_DataPoints', (e) => {
-    map.getCanvas().style.cursor = 'pointer';
-    const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code;
 
+    map.getCanvas().style.cursor = 'pointer';
+    
+    console.log('Monitoring Site Code',interactiveIdentifier ); 
     // Construct PDF URL
-    //const pdfUrl = `${interactiveIdentifier}.pdf`;
+    //const pdfUrl = `${interactiveIdentificonst interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code;er}.pdf`;
     const pdfUrl = `https://paani-earth-foundation.github.io/Arkavathi_River_Basin_Pollution_Map/${interactiveIdentifier}.pdf`;
+    console.log('PDF URL:', pdfUrl); 
     showWQPopup(pdfUrl);
 });
 
