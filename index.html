@@ -710,20 +710,23 @@ document.getElementById('reportBtn').onclick = () => {
     window.open('https://paani.earth/interactive-map/', '_blank');
 };
 
-// define infobox 
-// Set up a display box for hover details
-var infoBox = document.createElement('div');
-infoBox.id = 'info-box';
-infoBox.style.position = 'absolute';
-infoBox.style.bottom = '20px';
-infoBox.style.left = '20px';
-infoBox.style.padding = '10px';
-infoBox.style.backgroundColor = 'white';
-infoBox.style.border = '2px solid #888';
-infoBox.style.borderRadius = '5px';
-infoBox.style.zIndex = '1';
-infoBox.innerHTML = 'Hover over a point to see details';
-document.body.appendChild(infoBox);
+document.addEventListener("DOMContentLoaded", () => {
+    var infoBox = document.createElement('div');
+    infoBox.id = 'info-box';
+    infoBox.style.position = 'absolute';
+    infoBox.style.bottom = '20px';
+    infoBox.style.left = '20px';
+    infoBox.style.padding = '10px';
+    infoBox.style.backgroundColor = 'white';
+    infoBox.style.border = '2px solid #888';
+    infoBox.style.borderRadius = '5px';
+    infoBox.style.zIndex = '1';
+    infoBox.innerHTML = 'Hover over a point to see details';
+    document.body.appendChild(infoBox);
+});
+
+
+
 
 
 // Change cursor to pointer on hover
@@ -733,8 +736,8 @@ map.on('mouseenter', 'Movado_DataPoints', (e) => {
     infoBox.innerHTML = ` 
         <strong>Paani Study Locations</strong><br>
         Site Code: ${e.features[0].properties.Monitoring_Site_Code}<br>
-        Monitoring Location: ${e.features[0].properties.'Monitoring Location'}
-        Monitoring Purpose : ${e.features[0].properties.'Monitoring Purpose'}
+        Monitoring Location: ${e.features[0].properties['Monitoring Location']}<br>
+        Monitoring Purpose: ${e.features[0].properties['Monitoring Purpose']}
     `;
 });
 // Change cursor back to default when not hovering
