@@ -370,10 +370,10 @@ body {
     </div>
 </div>
 
-<!-- <div id="wqPanel" class="popup-panel">
+<div id="wqPanel" class="popup-panel">
     <button id="close-wq-panel" class="close-btn">Close</button>
     <iframe id="pdfFrame" src="Water_Quality_Data.pdf" type="application/pdf"></iframe>
-</div> -->
+</div>
 
 <div id="button-container">
     <div id="reportBtn"><img src='report_icon.png' alt="Report"></div>
@@ -724,7 +724,6 @@ map.on('mouseleave', 'Movado_DataPoints', () => {
 // Click event to show the PDF popup
 map.on('click', 'Movado_DataPoints', (e) => {
     map.getCanvas().style.cursor = 'pointer';
-
     const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code;
 
     // Construct PDF URL
