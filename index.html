@@ -725,21 +725,14 @@ map.on('mouseleave', 'Movado_DataPoints', () => {
 map.on('click', 'Movado_DataPoints', (e) => {
 
     map.getCanvas().style.cursor = 'pointer';
-    
-    if (e.features && e.features[0]) {
-        console.log("Feature properties:", e.features[0].properties); // Logs all properties
-    } else {
-        console.error("No features found on click event.");
-        return;
-    }
 
     const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code 
 
-    console.log('Monitoring Site Code',interactiveIdentifier ); 
+    //console.log('Monitoring Site Code',interactiveIdentifier ); 
     // Construct PDF URL
     const pdfUrl = `${interactiveIdentifier}.pdf`;
     //const pdfUrl = `https://paani-earth-foundation.github.io/Arkavathi_River_Basin_Pollution_Map/${interactiveIdentifier}.pdf`;
-    console.log('PDF URL:', pdfUrl); 
+    //console.log('PDF URL:', pdfUrl); 
     showWQPopup(pdfUrl);
 });
 
