@@ -733,7 +733,8 @@ map.on('click', 'Movado_DataPoints', (e) => {
         return;
     }
 
-    const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code
+    const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code 
+
     console.log('Monitoring Site Code',interactiveIdentifier ); 
     // Construct PDF URL
     //const pdfUrl = `${interactiveIdentifier}.pdf`;
