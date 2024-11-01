@@ -736,6 +736,25 @@ map.on('click', 'Movado_DataPoints', (e) => {
     showWQPopup(pdfUrl);
 });
 
+// Hover event to display in info box without popup
+map.on('mouseenter', 'Movado_DataPoints', (e) => {
+    map.getCanvas().style.cursor = 'pointer';
+
+    // Display attributes in the info box on hover
+    infoBox.innerHTML = ` 
+        <strong>Paani Study Locations</strong><br>
+        Site Code: ${e.features[0].properties.Monitoring_Site_Code}<br>
+        Monitoring Location: ${e.features[0].properties.Monitoring Location}
+        Monitoring Purpose : ${e.features[0].properties.Monitoring Purpose}
+    `;
+});
+
+// Reset info box when mouse leaves the data point
+map.on('mouseleave', 'Movado_DataPoints', () => {
+    infoBox.innerHTML = 'Hover over a point to see details';
+    map.getCanvas().style.cursor = '';
+});
+
 map.on('click', 'Govt_Monitoring_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';
 
