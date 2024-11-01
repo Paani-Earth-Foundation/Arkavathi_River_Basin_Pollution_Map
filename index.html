@@ -372,7 +372,7 @@ body {
 
 <div id="wqPanel" class="popup-panel">
     <button id="close-wq-panel" class="close-btn">Close</button>
-    <iframe id="pdfFrame" src="Water_Quality_Data.pdf" type="application/pdf"></iframe>
+    <iframe id="pdfFrame" src="" type="application/pdf"></iframe>
 </div>
 
 <div id="button-container">
@@ -711,7 +711,7 @@ document.getElementById('reportBtn').onclick = () => {
 };
 
 
-map.on('load', () => {
+
 // Change cursor to pointer on hover
 map.on('mouseenter', 'Movado_DataPoints', () => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
@@ -744,7 +744,7 @@ map.on('click', 'Govt_Monitoring_Points', (e) => {
   
 });
 
-});
+
 
 
 function showWQPopup(pdfUrl) {
