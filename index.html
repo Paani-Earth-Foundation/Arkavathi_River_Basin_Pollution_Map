@@ -725,10 +725,10 @@ map.on('mouseleave', 'Movado_DataPoints', () => {
 map.on('click', 'Movado_DataPoints', (e) => {
 
     map.getCanvas().style.cursor = 'pointer';
-    
+    const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code
     console.log('Monitoring Site Code',interactiveIdentifier ); 
     // Construct PDF URL
-    //const pdfUrl = `${interactiveIdentificonst interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code;er}.pdf`;
+    //const pdfUrl = `${interactiveIdentifier}.pdf`;
     const pdfUrl = `https://paani-earth-foundation.github.io/Arkavathi_River_Basin_Pollution_Map/${interactiveIdentifier}.pdf`;
     console.log('PDF URL:', pdfUrl); 
     showWQPopup(pdfUrl);
