@@ -729,7 +729,9 @@ map.on('click', 'Movado_DataPoints', (e) => {
     const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code;
 
     // Construct PDF URL
-    const pdfUrl = `${interactiveIdentifier}.pdf`;
+    //const pdfUrl = `${interactiveIdentifier}.pdf`;
+    const pdfUrl = `https://paani-earth-foundation.github.io/Arkavathi_River_Basin_Pollution_Map/${interactiveIdentifier}.pdf`;
+
     showWQPopup(pdfUrl);
 });
 
