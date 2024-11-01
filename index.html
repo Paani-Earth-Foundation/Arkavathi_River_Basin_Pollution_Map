@@ -710,13 +710,12 @@ document.getElementById('reportBtn').onclick = () => {
     window.open('https://paani.earth/interactive-map/', '_blank');
 };
 
-//
 
+map.on('load', () => {
 // Change cursor to pointer on hover
 map.on('mouseenter', 'Movado_DataPoints', () => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 });
-
 // Change cursor back to default when not hovering
 map.on('mouseleave', 'Movado_DataPoints', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
@@ -748,9 +747,7 @@ map.on('click', 'Govt_Monitoring_Points', (e) => {
   
 });
 
-
-
-
+});
 
 
 function showWQPopup(pdfUrl) {
