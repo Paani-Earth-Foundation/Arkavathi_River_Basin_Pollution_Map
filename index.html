@@ -113,7 +113,8 @@ body {
 .toggle-btn.off {
     background-color: grey;
 }
-#reportBtn {
+
+/* #reportBtn {
     width: 50px;
     height: 50px;
     display: none;
@@ -128,7 +129,7 @@ body {
 }
 #reportBtn:hover img {
     transform: scale(1.2);
-}
+} */
 
 
 /* Styling for the toggle menu */
@@ -284,7 +285,6 @@ body {
 }
 
 /*The css styling code for the second menu_layers*/
-
 /* Base Layers Menu styling for large screens */
 #menu_layers_Baselayers {
     position: absolute;
@@ -347,7 +347,16 @@ body {
         <span style="color:#fc9272; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">State Monitoring points</span>
     </label>   
 
-       
+    <label>
+        <div class="toggle-btn off" data-place="Research_Institutions_Study_Points">Off</div>
+        <span style="color:#021207; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Research Institutions</span>
+    </label>   
+
+    <label>
+        <div class="toggle-btn off" data-place="Govt_Identified_Contaminated_Sites">Off</div>
+        <span style="color:#1cb3a7; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Contaminated Sites</span>
+    </label> 
+    
 </div>
 
 
@@ -444,7 +453,7 @@ var geolocateControl = new mapboxgl.GeolocateControl({
     trackUserLocation: true,
     showUserHeading: true
 });
-map.addControl(geolocateControl, 'bottom-left');
+map.addControl(geolocateControl, 'top-left');
 
 // Add zoom and rotation controls to the map
 map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -456,8 +465,9 @@ map.addControl(new mapboxgl.ScaleControl());
 document.addEventListener('DOMContentLoaded', function() {
     const colorMap = {
         'Movado_DataPoints': '#de2d26',
-        'Govt_Monitoring_Points': '#fc9272'  
-
+        'Govt_Monitoring_Points': '#fc9272',
+        'Research_Institutions_Study_Points': '#021207',
+        'Govt_Identified_Contaminated_Sites': '#1cb3a7'
     };
 
     const buttons = document.querySelectorAll('.toggle-btn');
@@ -509,9 +519,6 @@ map.on('load', function() {
 
 
 
-
-// Adding code between these lines
-
     // Toggle for Industrial Areas
     document.getElementById('toggle_industrial').addEventListener('change', function (e) {
         const visibility = map.getLayoutProperty('Arkavathi_Industrial_Areas', 'visibility');
@@ -555,8 +562,9 @@ map.on('load', function() {
 
 });
 
-function addCustomLayers() {
+/* Adding all the source layers */
 
+function addCustomLayers() {
     map.addSource('Arkavathi_River_and_Tributaries', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.cm2k18zvn06m91uqqwwpbukji-2mgus'
@@ -679,7 +687,46 @@ map.addSource('Arkavathi_Industrial_Areas', {
         }
     });
 
-  
+    
+    map.addSource('Research_Institutions_Study_Points', {
+        type: 'vector',
+        url: 'mapbox://prasadmadhuri.bm77u35s'
+        
+    }); 
+    map.addLayer({
+        id: 'Research_Institutions_Study_Points',
+        type: 'circle',
+        source: 'Research_Institutions_Study_Points',
+        'source-layer': 'Research_Insititutions_Monito-bsj1of',
+        paint: {
+            'circle-color': '#021207',
+            'circle-radius': 7
+        },
+        layout: {
+            visibility: 'none'
+        }
+    });
+    
+   
+    map.addSource('Govt_Identified_Contaminated_Sites', {
+        type: 'vector',
+        url: 'mapbox://prasadmadhuri.99eza5hn'
+        
+    }); 
+    map.addLayer({
+        id: 'Govt_Identified_Contaminated_Sites',
+        type: 'circle',
+        source: 'Govt_Identified_Contaminated_Sites',
+        'source-layer': 'Government_Identified_Contami-1blkjg',
+        paint: {
+            'circle-color': '#1cb3a7',
+            'circle-radius': 7
+        },
+        layout: {
+            visibility: 'none'
+        }
+    });
+
 
 
     map.addSource('Basin_Boundary', {
@@ -703,37 +750,32 @@ map.addSource('Arkavathi_Industrial_Areas', {
     });
 }
 
-document.getElementById('info-button').addEventListener('click', function() {
-    const infoPanel = document.getElementById('infoPanel');
-    if (infoPanel.classList.contains('show')) {
-        closeInfoPanel();
-    } else {
-        openInfoPanel();
-    }
-});
+// document.getElementById('info-button').addEventListener('click', function() {
+//     const infoPanel = document.getElementById('infoPanel');
+//     if (infoPanel.classList.contains('show')) {
+//         closeInfoPanel();
+//     } else {
+//         openInfoPanel();
+//     }
+// });
 
-function openInfoPanel() {
-    const infoPanel = document.getElementById('infoPanel');
-    const infoButton = document.getElementById('info-button');
-    infoPanel.classList.add('show');
-    infoButton.textContent = 'X';
-}
-function closeInfoPanel() {
-    const infoPanel = document.getElementById('infoPanel');
-    const infoButton = document.getElementById('info-button');
-    const reportBtn = document.getElementById('reportBtn');
-    infoPanel.classList.remove('show');
-    document.getElementById('reportBtn').style.display = 'none';
-    infoButton.textContent = 'Info';
-}
-document.getElementById('reportBtn').onclick = () => {
-    window.open('https://paani.earth/interactive-map/', '_blank');
-};
-
-
-
-
-
+// function openInfoPanel() {
+//     const infoPanel = document.getElementById('infoPanel');
+//     const infoButton = document.getElementById('info-button');
+//     infoPanel.classList.add('show');
+//     infoButton.textContent = 'X';
+// }
+// function closeInfoPanel() {
+//     const infoPanel = document.getElementById('infoPanel');
+//     const infoButton = document.getElementById('info-button');
+//     const reportBtn = document.getElementById('reportBtn');
+//     infoPanel.classList.remove('show');
+//     document.getElementById('reportBtn').style.display = 'none';
+//     infoButton.textContent = 'Info';
+// }
+// document.getElementById('reportBtn').onclick = () => {
+//     window.open('https://paani.earth/interactive-map/', '_blank');
+// };
 
 
 // Change cursor to pointer on hover
@@ -778,21 +820,95 @@ map.on('click', 'Movado_DataPoints', (e) => {
     showWQPopup(pdfUrl);
 });
 
+/* Add hover code for Govt_Monitoring_Points */
 
+map.on('mouseenter', 'Govt_Monitoring_Points', (e) => {
+    map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
-map.on('click', 'Govt_Monitoring_Points', (e) => {
-    map.getCanvas().style.cursor = 'pointer';
+    // Populate infobox content
+    infoBox.innerHTML = ` 
+        <strong> Government Monitoring Points </strong><br><br>
+        Agency: <span style="color: #007acc;">${e.features[0].properties['Monitoring Agency Details']}</span><br><br>
+        Location: <span style="color: #007acc;">${e.features[0].properties['Monitoring Point Details']}</span><br><br>
+        Purpose: <span style="color: #007acc;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
+        Data in Public Domain: <span style="color: #007acc;">${e.features[0].properties['Data Available in Public Domain']}</span><br><br>
+        Data Source: <span style="color: #007acc;">${e.features[0].properties['Link to Data']}</span><br>
+    `;  
+    // Get the mouse position relative to the map container
+    const x = e.point.x + 10; // Add some offset for better positioning
+    const y = e.point.y + 10;
 
-    const interactiveIdentifier = e.features[0].properties.interactive_identifier;
+        // Position the infoBox near the cursor
+        infoBox.style.left = `${x}px`;
+        infoBox.style.top = `${y}px`;
+        infoBox.style.display = 'block'; // Show the infoBox
+});
+// Change cursor back to default when not hovering
+map.on('mouseleave', 'Govt_Monitoring_Points', (e) => {
+    infoBox.innerHTML = 'Hover over a point to see details';
+    map.getCanvas().style.cursor = '';  // Reset cursor
 
-    // construct pdf url
-    //const pdfUrl = `path/${interactiveIdentifier}.pdf`;
+});
 
-   // showWQPopup(pdfUrl);
-  
+/* Add hover code for  Research_Institutions_Study_Points */
+
+map.on('mouseenter', 'Research_Institutions_Study_Points', (e) => {
+    map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
+
+    // Populate infobox content
+    infoBox.innerHTML = ` 
+        <strong> Research_Institutions_Study_Points </strong><br><br>
+        Institution: <span style="color: #007acc;">${e.features[0].properties['Research Institution']}</span><br><br>
+        Location: <span style="color: #007acc;">${e.features[0].properties['Study Point Details']}</span><br><br>
+        Key Findings: <span style="color: #007acc;">${e.features[0].properties['Key Findings']}</span><br><br>
+        Study Period: <span style="color: #007acc;">${e.features[0].properties['Study Period']}</span><br><br>
+        Data Source: <span style="color: #007acc;">${e.features[0].properties['Data Source']}</span><br>
+    `;  
+    // Get the mouse position relative to the map container
+    const x = e.point.x + 10; // Add some offset for better positioning
+    const y = e.point.y + 10;
+
+        // Position the infoBox near the cursor
+        infoBox.style.left = `${x}px`;
+        infoBox.style.top = `${y}px`;
+        infoBox.style.display = 'block'; // Show the infoBox
+});
+// Change cursor back to default when not hovering
+map.on('mouseleave', 'Research_Institutions_Study_Points', (e) => {
+    infoBox.innerHTML = 'Hover over a point to see details';
+    map.getCanvas().style.cursor = '';  // Reset cursor
+
 });
 
 
+
+
+/* Add hover code for Govt_Identifed_Contaminated_Sites*/
+map.on('mouseenter', 'Govt_Identified_Contaminated_Sites', (e) => {
+    map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
+
+    // Populate infobox content
+    infoBox.innerHTML = ` 
+        <strong> Government Identifed Contaminated Sites </strong><br><br>
+        Agency: <span style="color: #007acc;">${e.features[0].properties['Agency']}</span><br><br>
+        Contaminated Site Details: <span style="color: #007acc;">${e.features[0].properties['Contaminated Site Details']}</span><br><br>
+        Data Source: <span style="color: #007acc;">${e.features[0].properties['Data Source']}</span><br>
+    `;  
+    // Get the mouse position relative to the map container
+    const x = e.point.x + 10; // Add some offset for better positioning
+    const y = e.point.y + 10;
+
+        // Position the infoBox near the cursor
+        infoBox.style.left = `${x}px`;
+        infoBox.style.top = `${y}px`;
+        infoBox.style.display = 'block'; // Show the infoBox
+});
+// Change cursor back to default when not hovering
+map.on('mouseleave', 'Govt_Identified_Contaminated_Sites', (e) => {
+    infoBox.innerHTML = 'Hover over a point to see details';
+    map.getCanvas().style.cursor = '';  // Reset cursor
+
+});
 
 
 function showWQPopup(pdfUrl) {
@@ -861,6 +977,20 @@ function switchLayer(event) {
     map.once('style.load', function() {
         addCustomLayers();
     });
+
+// For making sure the layers and sources that have been added to the map persist
+map.on('style.load', () => {
+    // Reapply custom layers and sources after style load
+    addCustomLayers();
+
+    // Check toggle button statuses and set visibility accordingly
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+        const place = button.getAttribute('data-place');
+        const isOn = button.classList.contains('on');
+        map.setLayoutProperty(place, 'visibility', isOn ? 'visible' : 'none');
+    });
+});
+
 }
 </script>
 </body>
