@@ -344,17 +344,17 @@ body {
 
     <label>
         <div class="toggle-btn off" data-place="Govt_Monitoring_Points">Off</div>
-        <span style="color:#fc9272; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">State Monitoring points</span>
+        <span style="color:#fc9272; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Govt Monitoring points</span>
     </label>   
 
     <label>
         <div class="toggle-btn off" data-place="Research_Institutions_Study_Points">Off</div>
-        <span style="color:#021207; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Research Institutions</span>
+        <span style="color:#021207; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Academic Monitoring Points</span>
     </label>   
 
     <label>
-        <div class="toggle-btn off" data-place="Govt_Identified_Contaminated_Sites">Off</div>
-        <span style="color:#1cb3a7; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Contaminated Sites</span>
+        <div class="toggle-btn off" data-place="Other_Monitoring_Points">Off</div>
+        <span style="color:#1cb3a7; font-family: 'Josefin Sans'; font-size: 19px; font-weight: bold; display:inline-block; margin-left:10px; text-align:left">Other Monitoring Points</span>
     </label> 
     
 </div>
@@ -421,7 +421,13 @@ body {
 </div>
 
 <script>
+    
 var infoBox = document.getElementById('info-box');
+infoBox.innerHTML = `<div id="info-content"></div>
+    <button id="close-info-box" style="margin-top: 5px; padding: 5px; background-color: #de2d26; color: white; border: none; border-radius: 3px;">Close</button>
+`;
+infoBox.style.display = 'none'; // Initially hidden
+
 
 const searchJS = document.getElementById('search-js');
     searchJS.onload = function () {
@@ -467,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'Movado_DataPoints': '#de2d26',
         'Govt_Monitoring_Points': '#fc9272',
         'Research_Institutions_Study_Points': '#021207',
-        'Govt_Identified_Contaminated_Sites': '#1cb3a7'
+        'Other_Monitoring_Points': '#1cb3a7'
     };
 
     const buttons = document.querySelectorAll('.toggle-btn');
@@ -708,16 +714,16 @@ map.addSource('Arkavathi_Industrial_Areas', {
     });
     
    
-    map.addSource('Govt_Identified_Contaminated_Sites', {
+    map.addSource('Other_Monitoring_Points', {
         type: 'vector',
-        url: 'mapbox://prasadmadhuri.99eza5hn'
+        url: 'mapbox://prasadmadhuri.08t2hhta'
         
     }); 
     map.addLayer({
-        id: 'Govt_Identified_Contaminated_Sites',
+        id: 'Other_Monitoring_Points',
         type: 'circle',
-        source: 'Govt_Identified_Contaminated_Sites',
-        'source-layer': 'Government_Identified_Contami-1blkjg',
+        source: 'Other_Monitoring_Points',
+        'source-layer': 'other_monitoring_points-1wtpw9',
         paint: {
             'circle-color': '#1cb3a7',
             'circle-radius': 7
@@ -750,166 +756,184 @@ map.addSource('Arkavathi_Industrial_Areas', {
     });
 }
 
-// document.getElementById('info-button').addEventListener('click', function() {
-//     const infoPanel = document.getElementById('infoPanel');
-//     if (infoPanel.classList.contains('show')) {
-//         closeInfoPanel();
-//     } else {
-//         openInfoPanel();
-//     }
-// });
+document.getElementById('info-button').addEventListener('click', function() {
+    const infoPanel = document.getElementById('infoPanel');
+    if (infoPanel.classList.contains('show')) {
+        closeInfoPanel();
+    } else {
+        openInfoPanel();
+    }
+});
 
-// function openInfoPanel() {
-//     const infoPanel = document.getElementById('infoPanel');
-//     const infoButton = document.getElementById('info-button');
-//     infoPanel.classList.add('show');
-//     infoButton.textContent = 'X';
-// }
-// function closeInfoPanel() {
-//     const infoPanel = document.getElementById('infoPanel');
-//     const infoButton = document.getElementById('info-button');
-//     const reportBtn = document.getElementById('reportBtn');
-//     infoPanel.classList.remove('show');
-//     document.getElementById('reportBtn').style.display = 'none';
-//     infoButton.textContent = 'Info';
-// }
-// document.getElementById('reportBtn').onclick = () => {
-//     window.open('https://paani.earth/interactive-map/', '_blank');
-// };
+function openInfoPanel() {
+    const infoPanel = document.getElementById('infoPanel');
+    const infoButton = document.getElementById('info-button');
+    infoPanel.classList.add('show');
+    infoButton.textContent = 'X';
+}
+function closeInfoPanel() {
+    const infoPanel = document.getElementById('infoPanel');
+    const infoButton = document.getElementById('info-button');
+    const reportBtn = document.getElementById('reportBtn');
+    infoPanel.classList.remove('show');
+    document.getElementById('reportBtn').style.display = 'none';
+    infoButton.textContent = 'Info';
+}
+document.getElementById('reportBtn').onclick = () => {
+    window.open('https://paani.earth/interactive-map/', '_blank');
+};
 
 
-// Change cursor to pointer on hover
-map.on('mouseenter', 'Movado_DataPoints', (e) => {
+
+
+
+map.on('click', 'Movado_DataPoints', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
     // Populate infobox content
     infoBox.innerHTML = ` 
         <strong>Paani Study Locations</strong><br><br>
-        Site Code: <span style="color: #007acc;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
-        Monitoring Location: <span style="color: #007acc;">${e.features[0].properties['Monitoring Location']}</span><br><br>
-        Monitoring Purpose: <span style="color: #007acc;">${e.features[0].properties['Monitoring Purpose']}</span><br>
+        Site Code: <span style="color: #333333;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
+        Monitoring Location: <span style="color:#333333;">${e.features[0].properties['Monitoring Location']}</span><br><br>
+        Monitoring Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br>
+        <br><button id="closeInfoBox" style="margin-top: 10px;">Close</button>
     `;
+
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
     const y = e.point.y + 10;
 
-        // Position the infoBox near the cursor
-        infoBox.style.left = `${x}px`;
-        infoBox.style.top = `${y}px`;
-        infoBox.style.display = 'block'; // Show the infoBox
+    // Position the infoBox near the cursor
+    infoBox.style.left = `${x}px`;
+    infoBox.style.top = `${y}px`;
+    infoBox.style.display = 'block'; // Show the infoBox
+
+    // Add event listener to close button
+    document.getElementById('closeInfoBox').addEventListener('click', () => {
+        infoBox.style.display = 'none'; // Hide the infoBox
+    });
 });
-// Change cursor back to default when not hovering
-map.on('mouseleave', 'Movado_DataPoints', (e) => {
-    infoBox.innerHTML = 'Hover over a point to see details';
+
+// Reset the cursor when not interacting with the point layer
+map.on('mouseleave', 'Movado_DataPoints', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
-
 });
 
-// Click event to show the PDF popup
-map.on('click', 'Movado_DataPoints', (e) => {
 
-    map.getCanvas().style.cursor = 'pointer';
 
-    const interactiveIdentifier = e.features[0].properties.Monitoring_Site_Code 
+/* Add click code for Govt_Monitoring_Points */
 
-    //console.log('Monitoring Site Code',interactiveIdentifier ); 
-    // Construct PDF URL
-    const pdfUrl = `${interactiveIdentifier}.pdf`;
-    //const pdfUrl = `https://paani-earth-foundation.github.io/Arkavathi_River_Basin_Pollution_Map/${interactiveIdentifier}.pdf`;
-    //console.log('PDF URL:', pdfUrl); 
-    showWQPopup(pdfUrl);
-});
-
-/* Add hover code for Govt_Monitoring_Points */
-
-map.on('mouseenter', 'Govt_Monitoring_Points', (e) => {
+map.on('click', 'Govt_Monitoring_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
-    // Populate infobox content
+    // Populate infobox content with a Close button
     infoBox.innerHTML = ` 
         <strong> Government Monitoring Points </strong><br><br>
-        Agency: <span style="color: #007acc;">${e.features[0].properties['Monitoring Agency Details']}</span><br><br>
-        Location: <span style="color: #007acc;">${e.features[0].properties['Monitoring Point Details']}</span><br><br>
-        Purpose: <span style="color: #007acc;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
-        Data in Public Domain: <span style="color: #007acc;">${e.features[0].properties['Data Available in Public Domain']}</span><br><br>
-        Data Source: <span style="color: #007acc;">${e.features[0].properties['Link to Data']}</span><br>
-    `;  
+        Agency: <span style="color:#333333;">${e.features[0].properties['Monitoring Agency Details']}</span><br><br>
+        Location: <span style="color: #333333;">${e.features[0].properties['Monitoring Point Details']}</span><br><br>
+        Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
+        Data in Public Domain: <span style="color: #333333;">${e.features[0].properties['Data Available in Public Domain']}</span><br><br>
+        Data Source: <a href="${e.features[0].properties['Link to Data']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Link to Data']}</a><br><br>
+        <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
+    `;
+
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
     const y = e.point.y + 10;
 
-        // Position the infoBox near the cursor
-        infoBox.style.left = `${x}px`;
-        infoBox.style.top = `${y}px`;
-        infoBox.style.display = 'block'; // Show the infoBox
+    // Position the infoBox near the cursor
+    infoBox.style.left = `${x}px`;
+    infoBox.style.top = `${y}px`;
+    infoBox.style.display = 'block'; // Show the infoBox
+
+    // Add event listener to close button
+    document.getElementById('closeInfoBox').addEventListener('click', () => {
+        infoBox.style.display = 'none'; // Hide the infoBox
+    });
 });
-// Change cursor back to default when not hovering
-map.on('mouseleave', 'Govt_Monitoring_Points', (e) => {
-    infoBox.innerHTML = 'Hover over a point to see details';
+
+// Reset the cursor when not interacting with the point layer
+map.on('mouseleave', 'Govt_Monitoring_Points', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
-
 });
 
-/* Add hover code for  Research_Institutions_Study_Points */
 
-map.on('mouseenter', 'Research_Institutions_Study_Points', (e) => {
+/* Add click code for  Research_Institutions_Study_Points */
+
+map.on('click', 'Research_Institutions_Study_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
-    // Populate infobox content
+    // Populate infobox content with a Close button
     infoBox.innerHTML = ` 
-        <strong> Research_Institutions_Study_Points </strong><br><br>
-        Institution: <span style="color: #007acc;">${e.features[0].properties['Research Institution']}</span><br><br>
-        Location: <span style="color: #007acc;">${e.features[0].properties['Study Point Details']}</span><br><br>
-        Key Findings: <span style="color: #007acc;">${e.features[0].properties['Key Findings']}</span><br><br>
-        Study Period: <span style="color: #007acc;">${e.features[0].properties['Study Period']}</span><br><br>
-        Data Source: <span style="color: #007acc;">${e.features[0].properties['Data Source']}</span><br>
+        <strong>Research Institutions Study Points</strong><br><br>
+        Institution: <span style="color: #333333;">${e.features[0].properties['Research Institution']}</span><br><br>
+        Location: <span style="color: #333333;">${e.features[0].properties['Study Point Details']}</span><br><br>
+        Key Findings: <span style="color: #333333;">${e.features[0].properties['Key Findings']}</span><br><br>
+        Study Period: <span style="color: #333333;">${e.features[0].properties['Study Period']}</span><br><br>
+        Data Source: <a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
+        <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
     `;  
+    
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
     const y = e.point.y + 10;
 
-        // Position the infoBox near the cursor
-        infoBox.style.left = `${x}px`;
-        infoBox.style.top = `${y}px`;
-        infoBox.style.display = 'block'; // Show the infoBox
+    // Position the infoBox near the cursor
+    infoBox.style.left = `${x}px`;
+    infoBox.style.top = `${y}px`;
+    infoBox.style.display = 'block'; // Show the infoBox
+
+    // Add event listener to close button
+    document.getElementById('closeInfoBox').addEventListener('click', () => {
+        infoBox.style.display = 'none'; // Hide the infoBox
+    });
 });
-// Change cursor back to default when not hovering
-map.on('mouseleave', 'Research_Institutions_Study_Points', (e) => {
-    infoBox.innerHTML = 'Hover over a point to see details';
+
+// Reset the cursor when not interacting with the point layer
+map.on('mouseleave', 'Research_Institutions_Study_Points', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
-
 });
 
 
 
+/* Add click code for Other data points from citizen groups, RTI Data etc*/
 
-/* Add hover code for Govt_Identifed_Contaminated_Sites*/
-map.on('mouseenter', 'Govt_Identified_Contaminated_Sites', (e) => {
+map.on('click', 'Other_Monitoring_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
-    // Populate infobox content
+    // Populate infobox content with a Close button
     infoBox.innerHTML = ` 
-        <strong> Government Identifed Contaminated Sites </strong><br><br>
-        Agency: <span style="color: #007acc;">${e.features[0].properties['Agency']}</span><br><br>
-        Contaminated Site Details: <span style="color: #007acc;">${e.features[0].properties['Contaminated Site Details']}</span><br><br>
-        Data Source: <span style="color: #007acc;">${e.features[0].properties['Data Source']}</span><br>
+        <strong> Data points obtained from Citizen groups, RTI applications etc </strong><br><br>
+        Data Contributor: <span style="color: #333333;">${e.features[0].properties['Data Contributor']}</span><br><br>
+        Location: <span style="color: #333333;">${e.features[0].properties['Location']}</span><br><br>
+        Key Findings: <span style="color: #333333;">${e.features[0].properties['Key Findings']}</span><br><br>
+        Data Source: <a href="${e.features[0].properties['Link to Data']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Link to Data']}</a><br><br>
+        <button id="closeInfoBox" style="margin-top: 10px;">Close</button> 
     `;  
+    
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
     const y = e.point.y + 10;
 
-        // Position the infoBox near the cursor
-        infoBox.style.left = `${x}px`;
-        infoBox.style.top = `${y}px`;
-        infoBox.style.display = 'block'; // Show the infoBox
+    // Position the infoBox near the cursor
+    infoBox.style.left = `${x}px`;
+    infoBox.style.top = `${y}px`;
+    infoBox.style.display = 'block'; // Show the infoBox
+
+    // Add event listener to close button
+    document.getElementById('closeInfoBox').addEventListener('click', () => {
+        infoBox.style.display = 'none'; // Hide the infoBox
+    });
 });
-// Change cursor back to default when not hovering
-map.on('mouseleave', 'Govt_Identified_Contaminated_Sites', (e) => {
-    infoBox.innerHTML = 'Hover over a point to see details';
+
+// Reset the cursor when not interacting with the point layer
+map.on('mouseleave', 'Other_Monitoring_Points', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
-
 });
 
+
+      
+/* Npt used functions in this map */
 
 function showWQPopup(pdfUrl) {
     const wqPanel = document.getElementById('wqPanel');
@@ -949,7 +973,7 @@ document.getElementById('close-wq-panel').addEventListener('click', function() {
     closeWQPopup();
 
 });
-
+/* end of unused code */
 
 document.getElementById('mapbox/streets-v11').addEventListener('click', switchLayer);
 document.getElementById('mapbox/satellite-v9').addEventListener('click', switchLayer);
