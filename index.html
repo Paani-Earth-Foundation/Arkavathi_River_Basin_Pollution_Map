@@ -221,7 +221,9 @@ body {
     max-width: 300px; /* Set a reasonable max-width for content wrapping */
     font-size: 14px; /* Smaller font size */
     line-height: 1.2; /* Compact line height */
-    /*word-wrap: break-word; /* Wrap long text if needed */
+    word-wrap: break-word; /* Breaks long words */
+    overflow-wrap: break-word; /* For older browsers */
+    overflow: auto; /* Adds scroll if content overflows */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
 }
 
@@ -845,9 +847,10 @@ map.on('click', 'Movado_DataPoints', (e) => {
     infoBox.innerHTML = ` 
         <strong>Paani Study Locations</strong><br><br>
         Site Code: <span style="color: #333333;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
-        Monitoring Location: <span style="color:#333333;">${e.features[0].properties['Monitoring Location']}</span><br><br>
-        Monitoring Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
-        Details: <a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
+        Location: <span style="color:#333333;">${e.features[0].properties['Monitoring Location']}</span><br><br>
+        Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
+        Study Period: <span style="color: #333333;">February & March 2024</span><br><br>
+        Key Findings: <span style="color: #FF0000;">Water and sediment samples tested at site for over 100 pollutants had signigicant concentrations of toxic chemicals. <br><br>For detailed findings, see: <br><a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
         <br><button id="closeInfoBox" style="margin-top: 10px;">Close</button>
     `;
 
@@ -895,6 +898,7 @@ map.on('click', 'Govt_Monitoring_Points', (e) => {
         Agency: <span style="color:#333333;">${e.features[0].properties['Monitoring Agency Details']}</span><br><br>
         Location: <span style="color: #333333;">${e.features[0].properties['Monitoring Point Details']}</span><br><br>
         Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
+        Key Findings: <span style="color: #FF0000;">${e.features[0].properties['Key Findings']}</span><br><br>
         Data in Public Domain: <span style="color: #333333;">${e.features[0].properties['Data Available in Public Domain']}</span><br><br>
         Data Source: ${dataSourceDisplay}<br>
         <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
@@ -931,7 +935,7 @@ map.on('click', 'Research_Institutions_Study_Points', (e) => {
         <strong>Research Institutions Study Points</strong><br><br>
         Institution: <span style="color: #333333;">${e.features[0].properties['Research Institution']}</span><br><br>
         Location: <span style="color: #333333;">${e.features[0].properties['Study Point Details']}</span><br><br>
-        Key Findings: <span style="color: #333333;">${e.features[0].properties['Key Findings']}</span><br><br>
+        Key Findings: <span style="color: #FF0000;">${e.features[0].properties['Key Findings']}</span><br><br>
         Study Period: <span style="color: #333333;">${e.features[0].properties['Study Period']}</span><br><br>
         Data Source: <a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
         <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
@@ -957,21 +961,19 @@ map.on('mouseleave', 'Research_Institutions_Study_Points', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
 });
 
-
-
-/* Add click code for Other data points from citizen groups, RTI Data etc*/
-
+/* Add click code for other monitoring points */
 map.on('click', 'Other_Monitoring_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
     // Populate infobox content with a Close button
     infoBox.innerHTML = ` 
-        <strong> Data points obtained from Citizen groups, RTI applications etc </strong><br><br>
+        <strong>Data points obtained from Citizen groups, RTI applications etc </strong><br><br>
         Data Contributor: <span style="color: #333333;">${e.features[0].properties['Data Contributor']}</span><br><br>
         Location: <span style="color: #333333;">${e.features[0].properties['Location']}</span><br><br>
-        Key Findings: <span style="color: #333333;">${e.features[0].properties['Key Findings']}</span><br><br>
+        Key Findings: <span style="color: #FF0000;">${e.features[0].properties['Key Findings ']}</span><br><br>
+        Study Period: <span style="color: #333333;">${e.features[0].properties['Study Period']}</span><br><br>
         Data Source: <a href="${e.features[0].properties['Link to Data']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Link to Data']}</a><br><br>
-        <button id="closeInfoBox" style="margin-top: 10px;">Close</button> 
+        <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
     `;  
     
     // Get the mouse position relative to the map container
@@ -993,6 +995,13 @@ map.on('click', 'Other_Monitoring_Points', (e) => {
 map.on('mouseleave', 'Other_Monitoring_Points', () => {
     map.getCanvas().style.cursor = '';  // Reset cursor
 });
+
+
+
+    
+    
+    
+
 
 
       
