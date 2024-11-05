@@ -656,13 +656,13 @@ map.addSource('Arkavathi_Industrial_Areas', {
 
     map.addSource('Movado_DataPoints', {
         type: 'vector',
-        url: 'mapbox://prasadmadhuri.cm2yp1js40m6h1mlosopr4ydp-26bhs'
+        url: 'mapbox://prasadmadhuri.31x5ojz9'
     }); 
     map.addLayer({
         id: 'Movado_DataPoints',
         type: 'circle',
         source: 'Movado_DataPoints',
-        'source-layer': 'Paani_Study_Locations_Final',
+        'source-layer': 'Paani_Study_Points-cl54xp',
         paint: {
             'circle-color': '#de2d26',
             'circle-radius': 10
@@ -826,7 +826,8 @@ map.on('click', 'Movado_DataPoints', (e) => {
         <strong>Paani Study Locations</strong><br><br>
         Site Code: <span style="color: #333333;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
         Monitoring Location: <span style="color:#333333;">${e.features[0].properties['Monitoring Location']}</span><br><br>
-        Monitoring Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br>
+        Monitoring Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
+        Details: <a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
         <br><button id="closeInfoBox" style="margin-top: 10px;">Close</button>
     `;
 
@@ -857,6 +858,17 @@ map.on('mouseleave', 'Movado_DataPoints', () => {
 map.on('click', 'Govt_Monitoring_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
+    // Determine if data is available in the public domain
+    const dataAvailable = e.features[0].properties['Data Available in Public Domain'];
+    const dataSource = e.features[0].properties['Link to Data'];
+
+    // Set Data Source display based on availability
+    let dataSourceDisplay;
+    if (dataAvailable === 'NO') {
+        dataSourceDisplay = `<span style="color: grey;">Unavailable</span>`;
+    } else {
+        dataSourceDisplay = `<a href="${dataSource}" target="_blank" style="color: #007acc;">${dataSource}</a>`;
+    }
     // Populate infobox content with a Close button
     infoBox.innerHTML = ` 
         <strong> Government Monitoring Points </strong><br><br>
@@ -864,7 +876,7 @@ map.on('click', 'Govt_Monitoring_Points', (e) => {
         Location: <span style="color: #333333;">${e.features[0].properties['Monitoring Point Details']}</span><br><br>
         Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
         Data in Public Domain: <span style="color: #333333;">${e.features[0].properties['Data Available in Public Domain']}</span><br><br>
-        Data Source: <a href="${e.features[0].properties['Link to Data']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Link to Data']}</a><br><br>
+        Data Source: ${dataSourceDisplay}<br>
         <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
     `;
 
