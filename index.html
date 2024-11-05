@@ -784,6 +784,37 @@ document.getElementById('reportBtn').onclick = () => {
 };
 
 
+/* Code to change the pointer to finger when you hover over the point for the user to know that the point is clickable*/
+// Change cursor to pointer (finger) when hovering over points on specific layers
+map.on('mouseenter', 'Movado_DataPoints', () => {
+    map.getCanvas().style.cursor = 'pointer';
+});
+map.on('mouseleave', 'Movado_DataPoints', () => {
+    map.getCanvas().style.cursor = '';
+});
+
+map.on('mouseenter', 'Govt_Monitoring_Points', () => {
+    map.getCanvas().style.cursor = 'pointer';
+});
+map.on('mouseleave', 'Govt_Monitoring_Points', () => {
+    map.getCanvas().style.cursor = '';
+});
+
+map.on('mouseenter', 'Research_Institutions_Study_Points', () => {
+    map.getCanvas().style.cursor = 'pointer';
+});
+map.on('mouseleave', 'Research_Institutions_Study_Points', () => {
+    map.getCanvas().style.cursor = '';
+});
+
+map.on('mouseenter', 'Other_Monitoring_Points', () => {
+    map.getCanvas().style.cursor = 'pointer';
+});
+map.on('mouseleave', 'Other_Monitoring_Points', () => {
+    map.getCanvas().style.cursor = '';
+});
+
+
 
 
 
