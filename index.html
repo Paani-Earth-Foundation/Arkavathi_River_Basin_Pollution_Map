@@ -139,7 +139,7 @@ body {
     right: 10px;  /* Keep this to the right */
     background-color: rgba(100, 100, 100, 0.6); /* Background color */
     padding: 8px;  /* Adjust the padding to change inner spacing */
-    z-index: 3; /* Ensure the toggle menu stays on top of other content */
+    z-index: 1; /* Ensure the toggle menu stays on top of other content */
     border-radius: 8px; /* Rounded corners */
     width: 20%;  /* Set the width to 50% of the screen size */
     height: auto; /* Adjust height; auto will fit content */
@@ -218,10 +218,10 @@ body {
     z-index: 1;
     display: none; /* Hide Initially */
     width: auto; /* Auto width to fit content */
-    max-width: 180px; /* Set a reasonable max-width for content wrapping */
+    max-width: 300px; /* Set a reasonable max-width for content wrapping */
     font-size: 14px; /* Smaller font size */
     line-height: 1.2; /* Compact line height */
-    word-wrap: break-word; /* Wrap long text if needed */
+    /*word-wrap: break-word; /* Wrap long text if needed */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
 }
 
@@ -230,13 +230,12 @@ body {
 /*The css styling code for the satellite and street selection menu layer*/
 #menu_layers {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
+    top: 300px;
+    left: 10px;
+    /*transform: translateX(-50%);*/
+    background: rgba(194, 233, 235, 0.85); /* Set to any color you prefer */
     border-radius: 5px;
     padding: 10px;
-    /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);*/
     z-index: 1;
     display: flex;
     gap: 10px;
@@ -290,7 +289,7 @@ body {
     position: absolute;
     top: 100px; /* Adjusted for better placement */
     left: 10px; /* Align it to the left */
-    width: 15%; /* Set the width to 50% for larger screens */
+    width: 15%; /* Set the width to 15% for larger screens */
     max-width: none; /* Remove the max-width restriction */
     background:#fff;
     border-radius: 4px;
@@ -327,8 +326,8 @@ body {
 
 <script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.21/web.js"></script>
 <div id="map1"></div>
-<div id="info-box">Hover over a point to see details</div>
 <div id="coordinates"></div>
+<div id="info-box"></div>
 <nav id="menu"></nav>
 <div class="sharethis-sticky-share-buttons"></div>
 
@@ -403,7 +402,6 @@ body {
 </div>
 
 <div id="button-container">
-    <div id="reportBtn"><img src='report_icon.png' alt="Report"></div>
     <div id="round-button">
         <button id="info-button">Info</button>
     </div>
@@ -768,20 +766,42 @@ document.getElementById('info-button').addEventListener('click', function() {
 function openInfoPanel() {
     const infoPanel = document.getElementById('infoPanel');
     const infoButton = document.getElementById('info-button');
+    
+    // Clear any existing content in infoPanel
+    infoPanel.innerHTML = '';
+    
+    // Create an img element for the PNG file
+    const img = document.createElement('img');
+    img.src = 'https://paani.earth/wp-content/uploads/2024/11/Info_new.png';  // Replace with the actual path or URL of your PNG file
+    img.alt = 'Information Image';
+    img.style.width = '100%';  // Adjust size as needed
+    img.style.height = 'auto';  // Maintain aspect ratio
+    
+    // Append the img element to the infoPanel
+    infoPanel.appendChild(img);
+    
+    // Add the close button dynamically
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.marginTop = '10px'; // Adds space between the image and the close button
+    closeButton.onclick = closeInfoPanel; // Set up close functionality
+    infoPanel.appendChild(closeButton);
+    
+    // Show the infoPanel
     infoPanel.classList.add('show');
     infoButton.textContent = 'X';
+
+    // Hide the second menu
+    // <div id="secondMenu".style.display = 'none';
 }
+
 function closeInfoPanel() {
     const infoPanel = document.getElementById('infoPanel');
     const infoButton = document.getElementById('info-button');
-    const reportBtn = document.getElementById('reportBtn');
     infoPanel.classList.remove('show');
-    document.getElementById('reportBtn').style.display = 'none';
     infoButton.textContent = 'Info';
 }
-document.getElementById('reportBtn').onclick = () => {
-    window.open('https://paani.earth/interactive-map/', '_blank');
-};
+
 
 
 /* Code to change the pointer to finger when you hover over the point for the user to know that the point is clickable*/
@@ -976,7 +996,7 @@ map.on('mouseleave', 'Other_Monitoring_Points', () => {
 
 
       
-/* Npt used functions in this map */
+/* Not used functions in this map */
 
 function showWQPopup(pdfUrl) {
     const wqPanel = document.getElementById('wqPanel');
