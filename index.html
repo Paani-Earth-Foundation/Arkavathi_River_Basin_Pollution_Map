@@ -99,7 +99,6 @@ body {
     border-radius: 50%;
     line-height: 40px;
     text-align: center;
-    margin-right: 3px;
     cursor: pointer;
     font-size: 15px;
     color: white;
@@ -137,11 +136,11 @@ body {
     position: absolute;
     top: 100px;
     right: 10px;  /* Keep this to the right */
-    background-color: rgba(100, 100, 100, 0.6); /* Background color */
+    background-color: rgba(255, 255, 255, 0.8); /* Background color */
     padding: 8px;  /* Adjust the padding to change inner spacing */
     z-index: 1; /* Ensure the toggle menu stays on top of other content */
-    border-radius: 8px; /* Rounded corners */
-    width: 20%;  /* Set the width to 50% of the screen size */
+    border-radius: 5px; /* Rounded corners */
+    width: 270px;  /* fixed width to accomodate text in one line */
     height: auto; /* Adjust height; auto will fit content */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add shadow for better appearance */
 }
@@ -149,18 +148,16 @@ body {
 /* For medium-sized screens */
 @media only screen and (max-width: 768px) {
     .toggle {
-        width: 60%; /* Reduce the width to 60% for medium screens */
-        padding: 10px; /* Adjust padding to fit screen */
-        top: 180px; /* Adjust top to prevent overlap */
     }
 }
 
 /* For small mobile screens */
 @media only screen and (max-width: 480px) {
     .toggle {
-        width: 80%; /* Use 80% width for small mobile screens */
-        padding: 8px; /* Adjust padding for smaller devices */
-        top: 200px; /* Push it down further for smaller screens */
+        padding: 5px; /* Adjust padding for smaller devices */
+        top: 60px; /* Push it down further for smaller screens */
+        right: 5px;
+        width: 55%;
     }
 }
 
@@ -168,15 +165,21 @@ body {
 .toggle label {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
-    gap: 5px; /* Adjust spacing between button and text */
-    
+    margin-bottom: 5px;
+    /* gap: 5px;  Adjust spacing between button and text */
 }
 .toggle span {
     display: flex;
     align-items: center;
     margin-left: 5px;
-    
+    font-family: 'Josefin Sans';
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.2;
+    display:inline-block;
+    margin-left:10px;
+    text-align:left;
+    width: 80%;
 }
 #button-container {
     position: absolute;
@@ -243,15 +246,27 @@ body {
     display: flex;
     gap: 10px;
 }
+
+/* For small mobile screens */
+@media only screen and (max-width: 480px) {
+    #menu_layers {
+        padding: 5px; /* Adjust padding for smaller devices */
+        top: 270px; /* Push it down further for smaller screens */
+        left: 5px;
+    }
+}
+
 .layer-option {
     display: flex;
     align-items: center;
+    margin-bottom: 5px;
 }
 .layer-option input {
     margin: 0 5px;
 }
 .layer-option label {
     margin: 0 5px;
+    font-weight: bold;
 }
 
 
@@ -292,11 +307,11 @@ body {
     position: absolute;
     top: 100px; /* Adjusted for better placement */
     left: 10px; /* Align it to the left */
-    width: 15%; /* Set the width to 15% for larger screens */
+    width: 175px; /* Fixed width to fit text */
     max-width: none; /* Remove the max-width restriction */
-    background:#fff;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 4px;
-    padding: 4px;
+    padding: 8px;
     z-index: 2;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -304,20 +319,16 @@ body {
 /* For medium-sized screens (tablets) */
 @media only screen and (max-width: 768px) {
     #menu_layers_Baselayers {
-        width: 40%; /* Adjust the width to 60% for medium screens */
-        left: 5px; /* Keep it aligned to the left */
-        top: 80px; /* Adjust the top position */
-        padding: 8px; /* Adjust padding */
     }
 }
 
 /* For small mobile screens */
 @media only screen and (max-width: 480px) {
     #menu_layers_Baselayers {
-        width: 40%; /* Set the width to 80% for small mobile screens */
         left: 5px; /* Keep aligned to the left */
         top: 60px; /* Adjust the top for small screens */
-        padding: 8px; /* Reduce padding for small screens */
+        padding: 5px; /* Reduce padding for small screens */
+        width: 40%;
     }
 }
 
@@ -336,54 +347,54 @@ body {
 
 
 
-<div class="toggle" style="background-color: white; padding: 5px; border-radius: 5px;">
+<div class="toggle">
     <label>
         <div class="toggle-btn on" data-place="Movado_DataPoints">On</div>
-        <span style="color:#de2d26; font-family: 'Josefin Sans'; font-size: 16px; font-weight: bold; line-height: 1.2;display:inline-block; margin-left:10px; text-align:left">Paani Study Points </span>
+        <span style="color:#de2d26;">Paani Study Points </span>
     </label>
 
     <label>
         <div class="toggle-btn off" data-place="Govt_Monitoring_Points">Off</div>
-        <span style="color:#fc9272; font-family: 'Josefin Sans'; font-size: 16px; font-weight: bold; line-height: 1.2;display:inline-block; margin-left:10px; text-align:left">Govt Monitoring points</span>
-    </label>   
+        <span style="color:#fc9272;">Govt Monitoring points</span>
+    </label>
 
     <label>
         <div class="toggle-btn off" data-place="Research_Institutions_Study_Points">Off</div>
-        <span style="color:#021207; font-family: 'Josefin Sans'; font-size: 16px; font-weight: bold; line-height: 1.2; display:inline-block; margin-left:10px; text-align:left">Academic Monitoring Points</span>
-    </label>   
+        <span style="color:#021207;">Academic Monitoring Points</span>
+    </label>
 
     <label>
         <div class="toggle-btn off" data-place="Other_Monitoring_Points">Off</div>
-        <span style="color:#1cb3a7; font-family: 'Josefin Sans'; font-size: 16px; font-weight: bold; line-height: 1.2; display:inline-block; margin-left:10px; text-align:left">Other Monitoring Points</span>
-    </label> 
-    
+        <span style="color:#1cb3a7;">Other Monitoring Points</span>
+    </label>
+
 </div>
 
 
 
-<div id="menu_layers_Baselayers" style="background-color:white;">
-    <h3 style="font-family: 'Josefin Sans', sans-serif; font-size: 18px; color: darkred; margin-bottom: 5px;">Base Layers</h3>
-    
+<div id="menu_layers_Baselayers">
+    <div style="font-family: 'Josefin Sans', sans-serif; font-size: 18px; color: darkred; margin: 5px; font-weight: bold;">Base Layers</div>
+
 
     <div class="layer-option" style="font-family: 'Josefin Sans', sans-serif;">
         <input id="toggle_industrial" type="checkbox" unchecked>
-        <label for="toggle_industrial" style="color:#542788; font-weight: bold;margin-bottom: 10px;">Industrial Areas</label>
+        <label for="toggle_industrial" style="color:#542788;">Industrial Areas</label>
     </div>
-   
+
 
     <div class="layer-option" style="font-family: 'Josefin Sans', sans-serif;">
         <input id="toggle_quarry" type="checkbox" unchecked>
-        <label for="toggle_quarry" style="color:#b35806; font-weight: bold;margin-bottom: 10px">Quarry Areas</label>
+        <label for="toggle_quarry" style="color:#b35806;">Quarry Areas</label>
     </div>
 
     <div class="layer-option" style="font-family: 'Josefin Sans', sans-serif;">
         <input id="toggle_basinboundary" type="checkbox" checked>
-        <label for="toggle_basinboundary" style="color:#999999; font-weight: bold;margin-bottom: 10px">Basin Boundary</label>
+        <label for="toggle_basinboundary" style="color:#999999;">Basin Boundary</label>
     </div>
 
     <div class="layer-option" style="font-family: 'Josefin Sans', sans-serif;">
         <input id="toggle_drainage" type="checkbox" unchecked>
-        <label for="toggle_drainage"style="color:#3182bd;font-weight: bold;margin-bottom: 10px"> Drainage </label>
+        <label for="toggle_drainage"style="color:#3182bd;"> Drainage </label>
     </div>
 </div>
 
@@ -420,7 +431,7 @@ body {
 </div>
 
 <script>
-    
+
 var infoBox = document.getElementById('info-box');
 infoBox.innerHTML = `<div id="info-content"></div>
     <button id="close-info-box" style="margin-top: 5px; padding: 5px; background-color: #de2d26; color: white; border: none; border-radius: 3px;">Close</button>
@@ -441,7 +452,7 @@ const searchJS = document.getElementById('search-js');
         map.addControl(searchBox);
     };
 
-    
+
 mapboxgl.accessToken = 'pk.eyJ1IjoicHJhc2FkbWFkaHVyaSIsImEiOiJjbGg4eHNuaXgwMjFrM2Zub3p6cXZzeGMyIn0.6ruJHZVi-S8WuEacESXnqA';
 var map = new mapboxgl.Map({
     container: 'map1',
@@ -554,7 +565,7 @@ map.on('load', function() {
         }
     });
 
-// Toggle for Drainage layer 
+// Toggle for Drainage layer
     document.getElementById('toggle_drainage').addEventListener('change', function (e) {
         const visibility = map.getLayoutProperty('Arkavathi_Drainage', 'visibility');
         if (e.target.checked) {
@@ -607,12 +618,12 @@ map.addSource('Arkavathi_Drainage', {
             visibility: 'none'
         }
     });
-    
+
 
 map.addSource('Arkavathi_Industrial_Areas', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.5orpg5fh'
-    }); 
+    });
     map.addLayer({
         id: 'Arkavathi_Industrial_Areas',
         type: 'fill',
@@ -634,7 +645,7 @@ map.addSource('Arkavathi_Industrial_Areas', {
     map.addSource('Arkavathi_Quarry_Areas', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.25ofmg0e'
-    }); 
+    });
     map.addLayer({
         id: 'Arkavathi_Quarry_Areas',
         type: 'fill',
@@ -645,7 +656,7 @@ map.addSource('Arkavathi_Industrial_Areas', {
         paint: {
         'fill-color': ' #b35806 ',  // Set the polygon fill color  #FFA500
         'fill-opacity': 1     // Optional: Set opacity to make the fill semi-transparent
-    
+
         },
         layout: {
             visibility: 'none'
@@ -656,7 +667,7 @@ map.addSource('Arkavathi_Industrial_Areas', {
     map.addSource('Movado_DataPoints', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.31x5ojz9'
-    }); 
+    });
     map.addLayer({
         id: 'Movado_DataPoints',
         type: 'circle',
@@ -671,13 +682,13 @@ map.addSource('Arkavathi_Industrial_Areas', {
         }
     });
 
-    
+
 
     map.addSource('Govt_MonitoringPoints', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.cm2k8oeoi7fga1zp6y3anz49z-39vs3'
-        
-    }); 
+
+    });
     map.addLayer({
         id: 'Govt_Monitoring_Points',
         type: 'circle',
@@ -692,12 +703,12 @@ map.addSource('Arkavathi_Industrial_Areas', {
         }
     });
 
-    
+
     map.addSource('Research_Institutions_Study_Points', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.bm77u35s'
-        
-    }); 
+
+    });
     map.addLayer({
         id: 'Research_Institutions_Study_Points',
         type: 'circle',
@@ -711,13 +722,13 @@ map.addSource('Arkavathi_Industrial_Areas', {
             visibility: 'none'
         }
     });
-    
-   
+
+
     map.addSource('Other_Monitoring_Points', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.08t2hhta'
-        
-    }); 
+
+    });
     map.addLayer({
         id: 'Other_Monitoring_Points',
         type: 'circle',
@@ -767,27 +778,27 @@ document.getElementById('info-button').addEventListener('click', function() {
 function openInfoPanel() {
     const infoPanel = document.getElementById('infoPanel');
     const infoButton = document.getElementById('info-button');
-    
+
     // Clear any existing content in infoPanel
     infoPanel.innerHTML = '';
-    
+
     // Create an img element for the PNG file
     const img = document.createElement('img');
     img.src = 'https://paani.earth/wp-content/uploads/2024/11/Info_new.png';  // Replace with the actual path or URL of your PNG file
     img.alt = 'Information Image';
     img.style.width = '100%';  // Adjust size as needed
     img.style.height = 'auto';  // Maintain aspect ratio
-    
+
     // Append the img element to the infoPanel
     infoPanel.appendChild(img);
-    
+
     // Add the close button dynamically
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
     closeButton.style.marginTop = '10px'; // Adds space between the image and the close button
     closeButton.onclick = closeInfoPanel; // Set up close functionality
     infoPanel.appendChild(closeButton);
-    
+
     // Show the infoPanel
     infoPanel.classList.add('show');
     infoButton.textContent = 'X';
@@ -843,7 +854,7 @@ map.on('click', 'Movado_DataPoints', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
     // Populate infobox content
-    infoBox.innerHTML = ` 
+    infoBox.innerHTML = `
         <strong>Paani Study Locations</strong><br><br>
         Site Code: <span style="color: #333333;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
         Location: <span style="color:#333333;">${e.features[0].properties['Monitoring Location']}</span><br><br>
@@ -892,7 +903,7 @@ map.on('click', 'Govt_Monitoring_Points', (e) => {
         dataSourceDisplay = `<a href="${dataSource}" target="_blank" style="color: #007acc;">${dataSource}</a>`;
     }
     // Populate infobox content with a Close button
-    infoBox.innerHTML = ` 
+    infoBox.innerHTML = `
         <strong> Government Monitoring Points </strong><br><br>
         Agency: <span style="color:#333333;">${e.features[0].properties['Monitoring Agency Details']}</span><br><br>
         Location: <span style="color: #333333;">${e.features[0].properties['Monitoring Point Details']}</span><br><br>
@@ -930,7 +941,7 @@ map.on('click', 'Research_Institutions_Study_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
     // Populate infobox content with a Close button
-    infoBox.innerHTML = ` 
+    infoBox.innerHTML = `
         <strong>Research Institutions Study Points</strong><br><br>
         Institution: <span style="color: #333333;">${e.features[0].properties['Research Institution']}</span><br><br>
         Location: <span style="color: #333333;">${e.features[0].properties['Study Point Details']}</span><br><br>
@@ -938,8 +949,8 @@ map.on('click', 'Research_Institutions_Study_Points', (e) => {
         Study Period: <span style="color: #333333;">${e.features[0].properties['Study Period']}</span><br><br>
         Data Source: <a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
         <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
-    `;  
-    
+    `;
+
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
     const y = e.point.y + 10;
@@ -965,7 +976,7 @@ map.on('click', 'Other_Monitoring_Points', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
     // Populate infobox content with a Close button
-    infoBox.innerHTML = ` 
+    infoBox.innerHTML = `
         <strong>Data points obtained from Citizen groups, RTI applications etc </strong><br><br>
         Data Contributor: <span style="color: #333333;">${e.features[0].properties['Data Contributor']}</span><br><br>
         Location: <span style="color: #333333;">${e.features[0].properties['Location']}</span><br><br>
@@ -973,8 +984,8 @@ map.on('click', 'Other_Monitoring_Points', (e) => {
         Study Period: <span style="color: #333333;">${e.features[0].properties['Study Period']}</span><br><br>
         Data Source: <a href="${e.features[0].properties['Link to Data']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Link to Data']}</a><br><br>
         <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
-    `;  
-    
+    `;
+
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
     const y = e.point.y + 10;
@@ -997,30 +1008,30 @@ map.on('mouseleave', 'Other_Monitoring_Points', () => {
 
 
 
-    
-    
-    
 
 
 
-      
+
+
+
+
 /* Not used functions in this map */
 
 function showWQPopup(pdfUrl) {
     const wqPanel = document.getElementById('wqPanel');
     const pdfFrame = document.getElementById('pdfFrame');
-    
+
     // Load the PDF into the iframe
-    pdfFrame.src = pdfUrl; 
+    pdfFrame.src = pdfUrl;
     wqPanel.style.display = 'block'; // Show the popup
-    
+
     // Hide the second menu
     const secondMenu = document.getElementById('menu_layers_Baselayers');
-    secondMenu.style.display = 'none'; 
+    secondMenu.style.display = 'none';
 
     // Hide the info button
     const infoButton = document.getElementById('info-button');
-    infoButton.style.display = 'none'; 
+    infoButton.style.display = 'none';
 }
 
 
@@ -1029,14 +1040,14 @@ function showWQPopup(pdfUrl) {
 function closeWQPopup() {
     const wqPanel = document.getElementById('wqPanel');
     wqPanel.style.display = 'none'; // Hide the popup
-    
+
     // Show the second menu again
     const secondMenu = document.getElementById('menu_layers_Baselayers');
-    secondMenu.style.display = 'block'; 
+    secondMenu.style.display = 'block';
 
     // Show the info button again
     const infoButton = document.getElementById('info-button');
-    infoButton.style.display = 'block'; 
+    infoButton.style.display = 'block';
 }
 
 // Attach the close event to the close button
