@@ -219,7 +219,7 @@ body {
     background-color: white;
     border: 1px solid #888; /* Thinner border */
     border-radius: 3px; /* Smaller border radius for a compact look */
-    z-index: 1;
+    z-index: 3;
     display: none; /* Hide Initially */
     width: auto; /* Auto width to fit content */
     max-width: 300px; /* Set a reasonable max-width for content wrapping */
@@ -421,7 +421,7 @@ body {
 
 <div id="menu_layers">
     <div class="layer-option">
-        <input id="mapbox/streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11">
+        <input id="mapbox/streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11" checked>
         <label for="mapbox/streets-v11">Streets</label>
     </div>
     <div class="layer-option">
@@ -533,8 +533,6 @@ map.on('load', function() {
         });
     });
 
-
-
     // Toggle for Industrial Areas
     document.getElementById('toggle_industrial').addEventListener('change', function (e) {
         const visibility = map.getLayoutProperty('Arkavathi_Industrial_Areas', 'visibility');
@@ -555,7 +553,7 @@ map.on('load', function() {
         }
     });
 
-  // Toggle for Basin Boundary
+    // Toggle for Basin Boundary
     document.getElementById('toggle_basinboundary').addEventListener('change', function (e) {
         const visibility = map.getLayoutProperty('Basin_Boundary', 'visibility');
         if (e.target.checked) {
@@ -565,7 +563,7 @@ map.on('load', function() {
         }
     });
 
-// Toggle for Drainage layer
+    // Toggle for Drainage layer
     document.getElementById('toggle_drainage').addEventListener('change', function (e) {
         const visibility = map.getLayoutProperty('Arkavathi_Drainage', 'visibility');
         if (e.target.checked) {
@@ -599,9 +597,7 @@ function addCustomLayers() {
         }
     });
 
-
-
-map.addSource('Arkavathi_Drainage', {
+    map.addSource('Arkavathi_Drainage', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.9nsht1bg'
     });
@@ -620,7 +616,7 @@ map.addSource('Arkavathi_Drainage', {
     });
 
 
-map.addSource('Arkavathi_Industrial_Areas', {
+    map.addSource('Arkavathi_Industrial_Areas', {
         type: 'vector',
         url: 'mapbox://prasadmadhuri.5orpg5fh'
     });
@@ -639,8 +635,6 @@ map.addSource('Arkavathi_Industrial_Areas', {
             visibility: 'none'
         }
     });
-
-
 
     map.addSource('Arkavathi_Quarry_Areas', {
         type: 'vector',
@@ -1079,24 +1073,46 @@ document.getElementById('mapbox/satellite-v9').addEventListener('click', switchL
 
 function switchLayer(event) {
     var layerId = event.target.value;
+
+    if(map.getStyle().sprite.includes(layerId)) {
+      // already on that layer, do nothing
+      return;
+    }
+
     map.setStyle('mapbox://styles/' + layerId);
     map.once('style.load', function() {
         addCustomLayers();
     });
 
-// For making sure the layers and sources that have been added to the map persist
-map.on('style.load', () => {
-    // Reapply custom layers and sources after style load
-    addCustomLayers();
+    // For making sure the layers and sources that have been added to the map persist
+    map.on('style.load', () => {
+        // Reapply custom layers and sources after style load
+        addCustomLayers();
 
-    // Check toggle button statuses and set visibility accordingly
-    document.querySelectorAll('.toggle-btn').forEach(button => {
-        const place = button.getAttribute('data-place');
-        const isOn = button.classList.contains('on');
-        map.setLayoutProperty(place, 'visibility', isOn ? 'visible' : 'none');
+        // Check toggle button statuses and set visibility accordingly
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            const place = button.getAttribute('data-place');
+            const isOn = button.classList.contains('on');
+            map.setLayoutProperty(place, 'visibility', isOn ? 'visible' : 'none');
+        });
+
+        // persist Base Layers
+        if(document.getElementById('toggle_industrial').checked) {
+          map.setLayoutProperty('Arkavathi_Industrial_Areas', 'visibility', 'visible');
+        }
+
+        if(document.getElementById('toggle_quarry').checked) {
+          map.setLayoutProperty('Arkavathi_Quarry_Areas', 'visibility', 'visible');
+        }
+
+        if(document.getElementById('toggle_basinboundary').checked) {
+          map.setLayoutProperty('Basin_Boundary', 'visibility', 'visible');
+        }
+
+        if(document.getElementById('toggle_drainage').checked) {
+          map.setLayoutProperty('Arkavathi_Drainage', 'visibility', 'visible');
+        }
     });
-});
-
 }
 </script>
 </body>
