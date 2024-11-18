@@ -847,16 +847,30 @@ map.on('mouseleave', 'Other_Monitoring_Points', () => {
 map.on('click', 'Movado_DataPoints', (e) => {
     map.getCanvas().style.cursor = 'pointer';  // Show the hand/finger cursor
 
+    const properties = e.features[0].properties;
+    const siteCode = properties.Monitoring_Site_Code;
+    const location = properties['Monitoring Location'];
+    const purpose = properties['Monitoring Purpose'];
+    const dataSource = properties['Data Source'];
+
+    let keyFindings = purpose === "Flow Analysis"
+    ? `Based on the site observations, existing treatment levels do not meet the volume of wastewater flow during the dry season.<br><br>
+       For detailed water quality findings, see: <a href="${dataSource}" target="_blank" style="color: #007acc;">${dataSource}</a>`
+    : `Sediment and water samples contained significant levels of toxic chemicals and persistent pollutants.<br><br>
+       For detailed findings, see: <a href="${dataSource}" target="_blank" style="color: #007acc;">${dataSource}</a>`;
+
+
     // Populate infobox content
     infoBox.innerHTML = `
-        <strong>Paani Study Locations</strong><br><br>
-        Site Code: <span style="color: #333333;">${e.features[0].properties.Monitoring_Site_Code}</span><br><br>
-        Location: <span style="color:#333333;">${e.features[0].properties['Monitoring Location']}</span><br><br>
-        Purpose: <span style="color: #333333;">${e.features[0].properties['Monitoring Purpose']}</span><br><br>
-        Study Period: <span style="color: #333333;">February & March 2024</span><br><br>
-        Key Findings: <span style="color: #FF0000;">Water and sediment samples tested at site for over 100 pollutants had signigicant concentrations of toxic chemicals. <br><br>For detailed findings, see: <br><a href="${e.features[0].properties['Data Source']}" target="_blank" style="color: #007acc;">${e.features[0].properties['Data Source']}</a><br><br>
-        <br><button id="closeInfoBox" style="margin-top: 10px;">Close</button>
-    `;
+    <strong>Paani Study Locations</strong><br><br>
+    Site Code: <span style="color: #333333;">${siteCode}</span><br><br>
+    Location: <span style="color:#333333;">${location}</span><br><br>
+    Purpose: <span style="color: #333333;">${purpose}</span><br><br>
+    Study Period: <span style="color: #333333;">February & March 2024</span><br><br>
+    Key Findings: <span style="color: #FF0000;">${keyFindings}</span><br><br>
+    <button id="closeInfoBox" style="margin-top: 10px;">Close</button>
+`;
+        
 
     // Get the mouse position relative to the map container
     const x = e.point.x + 10; // Add some offset for better positioning
