@@ -660,13 +660,14 @@ function addCustomLayers() {
 
     map.addSource('Movado_DataPoints', {
         type: 'vector',
-        url: 'mapbox://prasadmadhuri.31x5ojz9'
+        url: 'mapbox://prasadmadhuri.9pkhp6zj'
     });
     map.addLayer({
         id: 'Movado_DataPoints',
         type: 'circle',
         source: 'Movado_DataPoints',
-        'source-layer': 'Paani_Study_Points-cl54xp',
+        'source-layer': 'Paani_Study_Latest-cs5g7a',
+        
         paint: {
             'circle-color': '#de2d26',
             'circle-radius': 10
